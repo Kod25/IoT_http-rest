@@ -4,8 +4,8 @@ public class JavaHTTPPUT {
 
     public static void PUT(String fileName, PrintWriter out) throws IOException {
         String[] split = fileName.split("/");
-        File file = new File("../src/main/resources" + split[1] + ".txt");
-        if(false){
+        File file = new File("../src/main/resources/" + split[1] + ".txt");
+        if(file.exists()){
             //Appends to file.
             FileWriter fr = new FileWriter(file, true);
             BufferedWriter br = new BufferedWriter(fr);
