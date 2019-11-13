@@ -38,6 +38,7 @@ public class JavaHTTPServer implements Runnable{
         PrintWriter out = null;
         BufferedOutputStream dataOut = null;
         String fileName = null;
+        String inputText = null;
 
         try{
             in = new BufferedReader(new InputStreamReader(connect.getInputStream()));
@@ -52,7 +53,7 @@ public class JavaHTTPServer implements Runnable{
             if(method.equals("POST")) {
                 //post function
             }else if (method.equals("PUT")){
-                //function
+                JavaHTTPPUT.PUT(fileName, out);
             }else if (method.equals("GET")){
                 //function
             }else if (method.equals("DELETE")){
