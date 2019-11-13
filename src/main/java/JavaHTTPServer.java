@@ -56,7 +56,7 @@ public class JavaHTTPServer implements Runnable{
             }else if (method.equals("GET")){
                 //function
             }else if (method.equals("DELETE")){
-                //function
+                JavaHTTPDELETE.DELETE(fileName, out);
             }else{
                 //Om method inte finns
             }
@@ -64,7 +64,18 @@ public class JavaHTTPServer implements Runnable{
 
         }catch (IOException e){
             System.err.println(e);
-        }
+            
+        }finally{
+            try {
+                in.close();
+                out.close();
+                dataOut.close();
+                connect.close(); // we close socket connection
+            } catch (Exception e) {
+                System.err.println("Error closing stream : " + e.getMessage());
+            }
 
+                System.out.println("Connection closed.\n");
+        }
     }
 }
