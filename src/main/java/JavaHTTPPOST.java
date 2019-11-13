@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class JavaHTTPPOST {
-    public static void POST(String filename, PrintWriter out, BufferedOutputStream dataOut) throws IOException {
+    public static void POST(String filename, PrintWriter out) throws IOException {
         File file = new File("../src/main/resources/"+filename+".txt");
         if(file.createNewFile()){
             // send HTTP Headers

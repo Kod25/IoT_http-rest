@@ -50,7 +50,7 @@ public class JavaHTTPServer implements Runnable{
             fileName = parse.nextToken().toLowerCase();
 
             if(method.equals("POST")) {
-                JavaHTTPPOST.POST(fileName, out, dataOut);
+                JavaHTTPPOST.POST(fileName, out);
             }else if (method.equals("PUT")){
                 //function
             }else if (method.equals("GET")){
