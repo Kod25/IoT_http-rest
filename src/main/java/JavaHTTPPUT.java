@@ -2,15 +2,14 @@ import java.io.*;
 
 public class JavaHTTPPUT {
 
-    public static void PUT(String fileName, PrintWriter out) throws IOException {
-        String[] split = fileName.split("/");
-        File file = new File("../src/main/resources/" + split[1] + ".txt");
+    public static void PUT(String fileName, PrintWriter out, String body) throws IOException {
+        File file = new File("../src/main/resources/" + fileName + ".txt");
         if(file.exists()){
             //Appends to file.
-            FileWriter fr = new FileWriter(file, true);
+            FileWriter fr = new FileWriter(file, false);
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pr = new PrintWriter(br);
-            pr.println(split[2]);
+            pr.println(body);
             pr.close();
             br.close();
             fr.close();

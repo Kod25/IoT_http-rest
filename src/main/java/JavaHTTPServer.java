@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 
 public class JavaHTTPServer implements Runnable{
 
-    static final int PORT = 8080;
+    static final int PORT = 80;
 
     private Socket connect;
 
@@ -34,32 +34,47 @@ public class JavaHTTPServer implements Runnable{
 
     @Override
     public void run(){
-        BufferedReader in = null;
+        InputStream in = null;
         PrintWriter out = null;
         BufferedOutputStream dataOut = null;
         String fileName = null;
         String inputText = null;
 
         try{
-            in = new BufferedReader(new InputStreamReader(connect.getInputStream()));
+            in = connect.getInputStream();
             out = new PrintWriter(connect.getOutputStream());
             dataOut = new BufferedOutputStream(connect.getOutputStream());
+            //System.out.println("Storlek: "+connect.getReceiveBufferSize());
 
-            String input = in.readLine();
-            StringTokenizer parse = new StringTokenizer(input);
-            String method = parse.nextToken().toUpperCase();
-            fileName = parse.nextToken().toLowerCase();
+            String data = "";
+            char[] chars;
+            while(connect.getInputStream().available()!=0){
+                data = data + (char)in.read();
+            }
+            //System.out.println(data);
+
+            String[] stringArray = data.split("\r\n\r\n");
+            String[] arrayHead = stringArray[0].split("\r\n");
+            String body = stringArray[1];
+
+            System.out.println(body);
+            String[] firstLine = stringArray[0].split(" ");
+            String method = firstLine[0].toUpperCase();
+            fileName = firstLine[1].toLowerCase();
+
+
+            //System.out.println(fileName);
 
             if(method.equals("POST")) {
                 JavaHTTPPOST.POST(fileName, out);
             }else if (method.equals("PUT")){
-                JavaHTTPPUT.PUT(fileName, out);
+                JavaHTTPPUT.PUT(fileName, out, body);
             }else if (method.equals("GET")){
                 //function
             }else if (method.equals("DELETE")){
                 JavaHTTPDELETE.DELETE(fileName, out);
             }else{
-                //Om method inte finns
+                System.out.println("500 internt serverfel");
             }
 
 
