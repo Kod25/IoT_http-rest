@@ -74,7 +74,10 @@ public class JavaHTTPServer implements Runnable{
             }else if (method.equals("DELETE")){
                 JavaHTTPDELETE.DELETE(fileName, out);
             }else{
-                System.out.println("500 internt serverfel");
+                out.println("HTTP/1.1 400 Bad Request");
+                out.println("Server: Java HTTP Server from Wictor and Dalle : 1.0");
+                out.println(); // blank line between headers and content, very important !
+                out.flush(); //
             }
 
 
