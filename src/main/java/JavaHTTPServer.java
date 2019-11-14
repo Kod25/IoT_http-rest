@@ -39,6 +39,7 @@ public class JavaHTTPServer implements Runnable{
         BufferedOutputStream dataOut = null;
         String fileName = null;
         String inputText = null;
+        String body = null;
 
         try{
             in = connect.getInputStream();
@@ -51,13 +52,12 @@ public class JavaHTTPServer implements Runnable{
             while(connect.getInputStream().available()!=0){
                 data = data + (char)in.read();
             }
-            //System.out.println(data);
 
             String[] stringArray = data.split("\r\n\r\n");
             String[] arrayHead = stringArray[0].split("\r\n");
-            String body = stringArray[1];
-
-            System.out.println(body);
+            if(stringArray.length > 1) {
+                body = stringArray[1];
+            }
             String[] firstLine = stringArray[0].split(" ");
             String method = firstLine[0].toUpperCase();
             fileName = firstLine[1].toLowerCase();
@@ -70,7 +70,7 @@ public class JavaHTTPServer implements Runnable{
             }else if (method.equals("PUT")){
                 JavaHTTPPUT.PUT(fileName, out, body);
             }else if (method.equals("GET")){
-                //function
+                JavaHTTPGET.GET(fileName, out, dataOut);
             }else if (method.equals("DELETE")){
                 JavaHTTPDELETE.DELETE(fileName, out);
             }else{
@@ -79,7 +79,6 @@ public class JavaHTTPServer implements Runnable{
                 out.println(); // blank line between headers and content, very important !
                 out.flush(); //
             }
-
 
         }catch (IOException e){
             System.err.println(e);
